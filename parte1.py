@@ -18,6 +18,13 @@ contador_familias = 0
 contador_filhos = 0
 contador_filhos2 = 0
 
+print("""
+      Código | Descrição
+      1      | Adicionar família
+      2      | Exibir resultados
+      3      | Sair
+      """)
+
 def menu():
     print("=== EXIBINDO MENU ===")
     print("""
@@ -27,7 +34,7 @@ def menu():
         3      | Sair
         """)
 
-
+       
 
 while True:
     opcao = int(input("Digite o código para escolher uma opção: "))
