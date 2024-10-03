@@ -3,115 +3,91 @@ from dataclasses import dataclass
 
 os.system("cls || clear")
 
-# Estrutura de dados.
 @dataclass
-class Familia:
-    quantidade_filhos: int
+class Pesquisa:
+    nome: str
+    numero_de_filhos: int
     salario: float
 
+def media(a,b):
+    mediafim = a/b
+    return mediafim
+def maior_menor(a):
+    menor = min(lista_de_salarios)
+    maior = max(lista_de_salarios)
+    return maior, menor
 
-# Lista de de alunos.
 lista_de_familias = []
-total_familias = 0
-soma_salario = 0
-contador_familias = 0
+lista_de_salarios = []
+
+numero_familias = 0
+contador_salario = 0
 contador_filhos = 0
-contador_filhos2 = 0
 
-print("""
-      Código | Descrição
-      1      | Adicionar família
-      2      | Exibir resultados
-      3      | Sair
-      """)
-
-def menu():
-    print("=== EXIBINDO MENU ===")
+while True:
     print("""
-        Código | Descrição
-        1      | Adicionar Família
-        2      | Exibir resultados 
-        3      | Sair
-        """)
-
-       
-
-while True:
-    opcao = int(input("Digite o código para escolher uma opção: "))
-    break
-
-def limpar_terminal():
+            === Menu ===
+    |Código |   Descrição       |
+    |   1   | Adicionar família |
+    |   2   | Exibir resultados |
+    |   3   | Sair              |
+          """)
+    menu = int(input("Digite uma opção: "))
     os.system("cls || clear")
+    match menu:
+        case 1:
+            familia = Pesquisa(
+                nome = input("Digite o seu nome: "),
+                numero_de_filhos = int(input("Digite o número de filhos na família: ")),
+                salario = float(input("Digite o salário da família: R$ "))
+            )
+            lista_de_familias.append(familia)
+            lista_de_salarios.append(familia.salario)
+            contador_salario += 1
+            numero_familias += 1
 
-def solicitando_dados():
-    print("\n=== Solicitando dados da família ===")
+            os.system("cls || clear")
 
-while True:
-        familia = Familia(
-            quantidade_filhos = int(input("Digite sua quantidade de filhos: ")),
-            salario = float(input("Digite seu salário: ")))
-        break
+        case 2:
+            print("\n=== Exibindo resultados ===")
+            for familia in lista_de_familias:
+                print(f"Nome: {familia.nome}")
+                print(f"Número de filhos: {familia.numero_de_filhos}")
+                print(f"Salário: R$ {familia.salario}")
 
-soma_salario += familia.salario
-lista_de_familias.append(familia)
+            if contador_salario > 1:
 
-def exibindo_resultados():
-    print("\n=== Exibindo dados dos alunos ===")
-    for familia in lista_de_familias:
-        print(f"Quantidade de filhos: {familia.quantidade_filhos}")
-        print(f"Salário: {familia.salario}")
+                maior_salario, menor_salario = maior_menor(lista_de_salarios)
+                media_salario = media(sum(lista_de_salarios),(len(lista_de_salarios)))
+                print(f"\nMaior salário: R$ {maior_salario:.2f}")
+                print(f"\nMenor salário: R$ {menor_salario:.2f}")
+                print(f"\nA média dos salários foram: {media_salario}")
+            if numero_familias > 1:
+                
+                quantidade_familias = len(lista_de_familias)
+                contador_filhos = 0
+                for familia in lista_de_familias:
+                    contador_filhos += familia.numero_de_filhos
 
-match(opcao):
-    case 1:
-        limpar_terminal()
-        resultado = solicitando_dados()
-        print(f"{resultado}")
-    case 2:
-        limpar_terminal
-        resultado = exibindo_resultados()
-        print(f"{resultado}")
-    case 3:
-        print("=== FIM ===")
+                media_filhos = media(contador_filhos, quantidade_familias)
+                print(f"\nMédia de filhos por família: {media_filhos:.2f}")
 
-# Definindo arquivo para salvar os dados.
-nome_do_arquivo = "pesquisa.prefeitura.txt"
+        case 3:
+            nome_do_arquivo = "pesquisa_prefeitura.txt"
+            with open(nome_do_arquivo, "a") as pesquisadts:
+                for familia in lista_de_familias:
+                    pesquisadts.write(f"{familia.nome}, {familia.salario}, {familia.numero_de_filhos}\n")
+            break
 
-# Abrindo arquivo e definindo que será feita a escrita de dados.
-with open(nome_do_arquivo, "a") as arquivo_familias:
-    # Percorrendo vetor/lista.
-    for familia in lista_de_familias:
-        # Escrevendo no arquivo uma linha de cada vez.
-        arquivo_familias.write(f"{familia.quantidade_filhos}, {familia.salario}\n")
+with open (nome_do_arquivo, "r") as todos_alunos:
+    for linha in lista_de_familias:
+        nome, salario, numero_de_filhos = linha.strip().split(",")
+        lista_de_familias.append(pesquisadts(nome=nome, salario=float(salario, numero_familias=int(numero_de_filhos))))
 
-# Fechar conexão com o arquivo.
-arquivo_familias.close()
-print("\n=== Dados dos alunos salvo com sucesso! ===")
-
-
-# Lendo dados de um arquivo.
-# Limpando a lista de alunos.
-lista_de_familias = []
-
-print("\n=== Acessando dados de um arquivo ===")
-with open(nome_do_arquivo, "r") as arquivo_de_origem:
-    for linha in arquivo_de_origem:
-        quantidade_filhos, salario = linha.strip().split(",")
-        lista_de_familias.append(Familia(quantidade_filhos= int(quantidade_filhos), salario= float(salario)))
-
-# Fechar conexão com o arquivo.
-arquivo_familias.close()
-
+print("\n=== Exibindo dados das famílias ===")
 for familia in lista_de_familias:
-    contador_filhos2 += contador_filhos
-    media = contador_filhos2/contador_filhos
-
-print("\n\n=== Exibindo dados das famílias do arquivo ===")
-for familia in lista_de_familias:
-    print(f"Quantidade de filhos: {familia.quantidade_filhos}")
+    print(f"Nome: {familia.nome}")
+    print(f"Número de filhos: {familia.numero_de_filhos}")
     print(f"Salário: {familia.salario}")
-    print(f"Número de famílias: {lista_de_familias}")
-    print(f"Média do número de filhos: {media}")
-    print(f"Média dos salários: {familia.salario}")
 
-
-
+pesquisadts.close()
