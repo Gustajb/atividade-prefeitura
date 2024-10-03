@@ -1,3 +1,6 @@
+# Turma = G93313
+# Gustavo Batista e João Gabriel
+
 import os
 from dataclasses import dataclass
 
